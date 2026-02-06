@@ -2,12 +2,15 @@ import { Route, Routes } from "react-router-dom";
 import HomePage from "./Pages/Home/HomePage";
 import Auth from "./Pages/Auth/Auth";
 import ErrorPage from "./Pages/Error/ErrorPage";
+import NavBar from "./Components/NavBar/NavBar";
+import "./App.css"
 
 function App() {
 
   return (
 
     <div className="app">
+      <NavBar />
       <Routes>
         <Route path="/" element={<HomePage />}></Route>
         <Route path="/auth" element={<Auth />}></Route>
