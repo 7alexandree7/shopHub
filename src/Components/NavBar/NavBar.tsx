@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom"
+import { useAuth } from "../../Hooks/useAuth"
 
 
 const NavBar = () => {
+
+  const { user, loggout } = useAuth()
   return (
     <nav className="navbar">
       <div className="navbar-container">
@@ -13,10 +16,17 @@ const NavBar = () => {
         </div>
 
         <div className="navbar-auth">
+          {!user ? (
             <div className="navbar-auth-links">
-                <Link to="/auth" className="btn btn-secondary">Login</Link>
-                <Link to="/auth" className="btn btn-primary">Signup</Link>
+              <Link to="/auth" className="btn btn-secondary">Login</Link>
+              <Link to="/auth" className="btn btn-primary">Signup</Link>
             </div>
+          ): (
+            <div className="navbar-user">
+              <span className="navbar-greeting">Hello. {user.email}</span>
+              <button className="btn btn-secondary" onClick={loggout}>Logout</button>
+            </div>
+          )}
         </div>
       </div>
     </nav>
