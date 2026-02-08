@@ -14,7 +14,7 @@ const Auth = () => {
   const [mode, setMode] = useState("signup");
   const [error, setError] = useState<string | null>(null)
   const { register, handleSubmit, formState: { errors } } = useForm<User>();
-  const { signUp, user, loggout, login } = useAuth()
+  const { signUp, login } = useAuth()
   const navigate = useNavigate();
 
   const onSubmit = (data: User) => {
@@ -39,8 +39,6 @@ const Auth = () => {
     <div className="page">
       <div className="container">
         <div className="auth-container">
-          {user && <p>User Logged In {user.email}</p>}
-          <button onClick={() => loggout()}>Logout</button>
           <h1 className="page-title">{mode === "signup" ? "Sign Up" : "Login"}</h1>
           <form onSubmit={handleSubmit(onSubmit)}>
             {error && <div className="error-message">{error}</div>}
