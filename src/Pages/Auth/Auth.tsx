@@ -1,22 +1,49 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form"
+import { useAuth } from "../../Hooks/useAuth"
+import { useNavigate } from "react-router-dom";
+
+interface User {
+  email: string;
+  password: string;
+}
 
 
 const Auth = () => {
 
   const [mode, setMode] = useState("signup");
-  const { register, handleSubmit, formState: { errors } } = useForm({});
+  const [error, setError] = useState<string | null>(null)
+  const { register, handleSubmit, formState: { errors } } = useForm<User>();
+  const { signUp, user, loggout, login } = useAuth()
+  const navigate = useNavigate();
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = (data: User) => {
+    setError(null)
+    let result;
+    if (mode === "signup") {
+      result = signUp(data.email, data.password)
+      console.log(result)
+    } else {
+      result = login(data.email, data.password)
+    }
+
+    if (result?.success) {
+      alert("Success")
+      navigate("/")
+    } else {
+      setError(result?.error || null)
+    }
   }
 
   return (
     <div className="page">
       <div className="container">
         <div className="auth-container">
+          {user && <p>User Logged In {user.email}</p>}
+          <button onClick={() => loggout()}>Logout</button>
           <h1 className="page-title">{mode === "signup" ? "Sign Up" : "Login"}</h1>
           <form onSubmit={handleSubmit(onSubmit)}>
+            {error && <div className="error-message">{error}</div>}
             <div className="form-group">
               <label htmlFor="email" className="form-label">Email</label>
               <input
