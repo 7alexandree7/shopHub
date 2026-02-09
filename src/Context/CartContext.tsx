@@ -14,7 +14,7 @@ interface CartItem {
     quantity: number
 }
 
-const cartContent = createContext<CartContextData | null>(null)
+export const CartContext = createContext<CartContextData | null>(null)
 
 export default function CartProvider({ children }: CartProviderProps) {
 
@@ -37,8 +37,8 @@ export default function CartProvider({ children }: CartProviderProps) {
     }
 
     return (
-        <cartContent.Provider value={{ addToCart, cartItems }}>
+        <CartContext.Provider value={{ addToCart, cartItems }}>
             {children}
-        </cartContent.Provider>
+        </CartContext.Provider>
     )
 }
