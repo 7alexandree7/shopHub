@@ -80,6 +80,6 @@ export function getProducts() {
     return products;
 }
 
-export function getProductById(id: string | undefined) {
+export function getProductById(id: string | undefined | number) {
     return products.find((p) => p.id === Number(id));
 }
